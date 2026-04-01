@@ -1,0 +1,23 @@
+{
+  "name": "playwrightframework",
+  "version": "1.0.0",
+  "description": "E2E tests",
+  "homepage": "https://github.com/alekstoshev-dot/PlaywrightFramework#readme",
+  "bugs": {
+    "url": "https://github.com/alekstoshev-dot/PlaywrightFramework/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekstoshev-dot/PlaywrightFramework.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "devDependencies": {
+    "@playwright/test": "^1.59.0",
+    "@types/node": "^25.5.0"
+  }
+}
