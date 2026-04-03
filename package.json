@@ -17,7 +17,7 @@
   "scripts": {},
   "keywords": [],
   "devDependencies": {
-    "@playwright/test": "^1.59.0",
+    "@playwright/test": "^1.59.1",
     "@types/node": "^25.5.0"
   }
 }

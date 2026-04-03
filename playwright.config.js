@@ -24,7 +24,7 @@ module.exports = defineConfig({
 
   use: {
     // Base URL
-    baseURL: 'https://jackentertainment.lv-stg.gameaccount.com/',
+    baseURL: 'https://jackentertainment.lv-dev.gameaccount.com/',
 
     // Log
     trace: 'on-first-retry',
@@ -36,7 +36,11 @@ module.exports = defineConfig({
     video: 'retain-on-failure',
 
     // Headless mode
-    headless: true,
+    headless: false,
+
+    // забавя действията за да се вижда
+    slowMo: 500,
+
   },
 
   // Browser configurations
@@ -45,22 +49,22 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-    // Mobile browsers
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
+    // // Mobile browsers
+    // {
+    //   name: 'Mobile Chrome',
+    //   use: { ...devices['Pixel 5'] },
+    // },
+    // {
+    //   name: 'Mobile Safari',
+    //   use: { ...devices['iPhone 12'] },
+    // },
   ],
 });
