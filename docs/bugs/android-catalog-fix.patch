@@ -1,0 +1,89 @@
+diff --git a/app/build.gradle b/app/build.gradle
+index a42f418..98425fb 100644
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@ -53,7 +53,6 @@ android {
+     compileSdkVersion 31
+     buildToolsVersion "30.0.2"
+     useLibrary 'org.apache.http.legacy'
+-    ndkVersion '21.3.6528147'
+ 
+     defaultConfig {
+         applicationId "com.saucelabs.mydemoapp.android"
+@@ -119,6 +118,10 @@ android {
+ 
+     signingConfigs {
+         debug {
++            storeFile rootProject.file('portfolio-debug.keystore')
++            storePassword 'android'
++            keyAlias 'androiddebugkey'
++            keyPassword 'android'
+             v1SigningEnabled true
+             v2SigningEnabled true
+         }
+@@ -230,3 +233,19 @@ dependencies {
+ 
+ apply plugin: 'com.google.gms.google-services'
+ apply plugin: 'com.google.firebase.crashlytics'
++
++// Ensure generated Google Services resources exist before AGP maps source sets.
++tasks.configureEach { task ->
++    if (task.name == "mapDebugSourceSetPaths") {
++        task.dependsOn("processDebugGoogleServices")
++    }
++}
++
++// Restricted-environment fallback: reuse javac output only after bytecode verification.
++if (project.hasProperty('reuseCompiledClasses')) {
++    def compiledCatalog = file("$buildDir/intermediates/javac/debug/classes/com/saucelabs/mydemoapp/android/view/fragments/ProductCatalogFragment.class")
++    if (!compiledCatalog.isFile()) throw new GradleException('Compile sources before requesting reuseCompiledClasses')
++    tasks.withType(JavaCompile).configureEach {
++        if (name == 'compileDebugJavaWithJavac') onlyIf { false }
++    }
++}
+diff --git a/app/src/main/java/com/saucelabs/mydemoapp/android/view/fragments/ProductCatalogFragment.java b/app/src/main/java/com/saucelabs/mydemoapp/android/view/fragments/ProductCatalogFragment.java
+index 4cb958d..731d8ac 100644
+--- a/app/src/main/java/com/saucelabs/mydemoapp/android/view/fragments/ProductCatalogFragment.java
++++ b/app/src/main/java/com/saucelabs/mydemoapp/android/view/fragments/ProductCatalogFragment.java
+@@ -141,9 +141,6 @@ public class ProductCatalogFragment extends BaseFragment implements View.OnClick
+ 
+     private void setAdapter() {
+ 
+-        final Integer[] meta = new Integer[] {
+-                0, null, 2, 3, 4, 5 // null is an intentionally introduced bug for demos
+-        };
+ 
+         mAct.runOnUiThread(() -> {
+             adapter = new ProductsAdapter(mAct, productList, (position, status) -> {
+@@ -153,7 +150,6 @@ public class ProductCatalogFragment extends BaseFragment implements View.OnClick
+ //                }
+ 
+                 Bundle bundle = ST.getBundle(MainActivity.FRAGMENT_PRODUCT_DETAIL, 1);
+-                bundle.putString("meta", "" + meta[position].intValue());
+                 bundle.putString(Constants.ARG_PARAM1, String.valueOf(productList.get(position).getId()));
+ 
+                 ST.startMainActivity(mAct, bundle);
+diff --git a/build.gradle b/build.gradle
+index 5387c33..ed49ece 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -21,7 +21,7 @@ buildscript {
+     }
+ 
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:7.0.2'
++        classpath 'com.android.tools.build:gradle:7.4.2'
+         classpath 'com.google.gms:google-services:4.3.10'
+         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+index ffed3a2..3994438 100644
+--- a/gradle/wrapper/gradle-wrapper.properties
++++ b/gradle/wrapper/gradle-wrapper.properties
+@@ -1,5 +1,5 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.2-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.4-bin.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists

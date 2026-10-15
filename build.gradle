@@ -1,0 +1,12 @@
+plugins {
+    id 'com.diffplug.spotless' version '7.2.1'
+}
+spotless {
+    format 'sources', {
+        target 'src/**/*.ts', 'tests/portfolio/**/*.ts', 'portfolio.config.ts',
+               'playwright.config.js', 'scripts/**/*.cjs', 'package.json',
+               'tsconfig.json', '.prettierrc.json', '.github/workflows/*.yml', '.vscode/tasks.json'
+        prettier('3.6.2').configFile('.prettierrc.json')
+        endWithNewline()
+    }
+}

@@ -1,4 +1,3 @@
-
 # Playwright
 node_modules/
 /test-results/
@@ -6,5 +5,17 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-/package-lock.json
 
+
+
+.env
+/apps/
+/portfolio-report/
+/portfolio-results/
+
+.env.auth
+
+/allure-results/
+/allure-report/
+/.gradle/
+/build/

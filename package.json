@@ -1,7 +1,7 @@
 {
   "name": "playwrightframework",
   "version": "1.0.0",
-  "description": "E2E tests",
+  "description": "Cross-platform portfolio: Playwright web/API and Appium 3 native mobile",
   "homepage": "https://github.com/alekstoshev-dot/PlaywrightFramework#readme",
   "bugs": {
     "url": "https://github.com/alekstoshev-dot/PlaywrightFramework/issues"
@@ -14,10 +14,36 @@
   "author": "",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test -c portfolio.config.ts --project=web --project=api",
+    "test:web": "playwright test -c portfolio.config.ts --project=web --headed --workers=1",
+    "test:api": "playwright test -c portfolio.config.ts --project=api",
+    "test:android": "playwright test -c portfolio.config.ts --project=android",
+    "test:ios": "playwright test -c portfolio.config.ts --project=ios",
+    "typecheck": "tsc --noEmit",
+    "appium": "appium",
+    "report": "playwright show-report portfolio-report",
+    "test:web:ci": "playwright test -c portfolio.config.ts --project=web",
+    "test:web:debug": "playwright test -c portfolio.config.ts --project=web --debug",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "format:check": "node scripts/spotless.cjs spotlessCheck",
+    "format": "node scripts/spotless.cjs spotlessApply"
+  },
   "keywords": [],
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.0",
+    "allure-commandline": "^2.46.1",
+    "allure-playwright": "^3.13.0",
+    "appium": "^3.0.0",
+    "appium-uiautomator2-driver": "^8.7.0",
+    "dotenv": "^17.0.0",
+    "typescript": "^5.9.3",
+    "webdriverio": "^10.0.2"
+  },
+  "overrides": {
+    "shell-quote": "^1.11.0"
   }
 }
